@@ -64,8 +64,8 @@ extension CAPSPageMenu {
             let menuPadding = view.frame.size.width - rightPadding
             
             menuRigthView.frame = CGRect(x: menuPadding,
-                                         y: frame.origin.x,
-                                         width: frame.size.width,
+                                         y: frame.origin.y,
+                                         width: rightPadding,
                                          height: frame.size.height)
             view.addSubview(menuRigthView)
             
