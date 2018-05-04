@@ -44,4 +44,7 @@ public enum CAPSPageMenuOption {
     case scrollAnimationDurationOnMenuItemTap(Int)
     case centerMenuItems(Bool)
     case hideTopMenuBar(Bool)
+    case menuPadding(UIEdgeInsets)
+    case appendLeftView(UIView)
+    case appendRigthView(UIView)
 }

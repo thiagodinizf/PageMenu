@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import PageMenu
 
-class RecentsTableViewController: UITableViewController {
-        
+class RecentsTableViewController: UITableViewController, CAPSPageMenuItemController {
+    
+    var titleTab: String?
+    var imageTab: UIImageView? = UIImageView(image:  UIImage(named: "woman1.jpg"))
+    var idTab: Int = 0
+    
     var namesArray : [String] = ["Kim White", "Kim White", "David Fletcher", "Anna Hunt", "Timothy Jones", "Timothy Jones", "Timothy Jones", "Lauren Richard", "Lauren Richard", "Juan Rodriguez"]
     var photoNameArray : [String] = ["woman1.jpg", "woman1.jpg", "man8.jpg", "woman3.jpg", "man3.jpg", "man3.jpg", "man3.jpg", "woman5.jpg", "woman5.jpg", "man5.jpg"]
     var activityTypeArray : NSArray = [0, 1, 1, 0, 2, 1, 2, 0, 0, 2]
@@ -17,8 +22,7 @@ class RecentsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.register(UINib(nibName: "RecentsTableViewCell", bundle: nil), forCellReuseIdentifier: "RecentsTableViewCell")
+        tableView.register(UINib(nibName: "RecentsTableViewCell", bundle: nil), forCellReuseIdentifier: "RecentsTableViewCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,11 +32,9 @@ class RecentsTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.tableView.showsVerticalScrollIndicator = false
+        tableView.showsVerticalScrollIndicator = false
         super.viewDidAppear(animated)
-        self.tableView.showsVerticalScrollIndicator = true
-        
-//        println("recents page: viewDidAppear")
+        tableView.showsVerticalScrollIndicator = true
     }
     
     override func didReceiveMemoryWarning() {

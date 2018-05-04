@@ -8,11 +8,53 @@
 
 import UIKit
 
+extension MenuItemView {
+    private func configureTabView() {
+        guard let pageMenu = pageMenu,
+            let controller = controller,
+            let index = index else {
+                return
+        }
+        
+        var title: String?
+        if let menuItemController = controller as? CAPSPageMenuItemController {
+            if let imageTab = menuItemController.imageTab {
+                imageTab.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
+                addSubview(imageTab)
+                return
+            } else if let titleTab =  menuItemController.titleTab {
+                title = titleTab
+            }
+        }
+        
+        // Configure menu item label font if font is set by user
+        titleLabel!.font = pageMenu.configuration.menuItemFont
+    
+        titleLabel!.textAlignment = NSTextAlignment.center
+        titleLabel!.textColor = pageMenu.configuration.unselectedMenuItemLabelColor
+        
+        titleLabel!.adjustsFontSizeToFitWidth = pageMenu.configuration.titleTextSizeBasedOnMenuItemWidth
+    
+        // Set title depending on if controller has a title set
+        if title != nil {
+            titleLabel!.text = title!
+        } else if controller.title != nil {
+            titleLabel!.text = controller.title!
+        } else {
+            titleLabel!.text = "Menu \(Int(index) + 1)"
+        }
+        addSubview(titleLabel!)
+    }
+}
 class MenuItemView: UIView {
     // MARK: - Menu item view
     
     var titleLabel : UILabel?
     var menuItemSeparator : UIView?
+    
+    var pageMenu: CAPSPageMenu?
+    var controller: UIViewController?
+    var index: CGFloat?
     
     func setUpMenuItemView(_ menuItemWidth: CGFloat, menuScrollViewHeight: CGFloat, indicatorHeight: CGFloat, separatorPercentageHeight: CGFloat, separatorWidth: CGFloat, separatorRoundEdges: Bool, menuItemSeparatorColor: UIColor) {
         titleLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: menuItemWidth, height: menuScrollViewHeight - indicatorHeight))
@@ -26,8 +68,6 @@ class MenuItemView: UIView {
         
         menuItemSeparator!.isHidden = true
         self.addSubview(menuItemSeparator!)
-        
-        self.addSubview(titleLabel!)
     }
     
     func setTitleText(_ text: NSString) {
@@ -39,6 +79,11 @@ class MenuItemView: UIView {
     }
     
     func configure(for pageMenu: CAPSPageMenu, controller: UIViewController, index: CGFloat) {
+        
+        self.pageMenu = pageMenu
+        self.controller = controller
+        self.index = index
+        
         if pageMenu.configuration.useMenuLikeSegmentedControl {
             //**************************拡張*************************************
             if pageMenu.menuItemMargin > 0 {
@@ -53,22 +98,7 @@ class MenuItemView: UIView {
             self.setUpMenuItemView(pageMenu.configuration.menuItemWidth, menuScrollViewHeight: pageMenu.configuration.menuHeight, indicatorHeight: pageMenu.configuration.selectionIndicatorHeight, separatorPercentageHeight: pageMenu.configuration.menuItemSeparatorPercentageHeight, separatorWidth: pageMenu.configuration.menuItemSeparatorWidth, separatorRoundEdges: pageMenu.configuration.menuItemSeparatorRoundEdges, menuItemSeparatorColor: pageMenu.configuration.menuItemSeparatorColor)
         }
         
-        // Configure menu item label font if font is set by user
-        self.titleLabel!.font = pageMenu.configuration.menuItemFont
-        
-        self.titleLabel!.textAlignment = NSTextAlignment.center
-        self.titleLabel!.textColor = pageMenu.configuration.unselectedMenuItemLabelColor
-        
-        //**************************拡張*************************************
-        self.titleLabel!.adjustsFontSizeToFitWidth = pageMenu.configuration.titleTextSizeBasedOnMenuItemWidth
-        //**************************拡張ここまで*************************************
-        
-        // Set title depending on if controller has a title set
-        if controller.title != nil {
-            self.titleLabel!.text = controller.title!
-        } else {
-            self.titleLabel!.text = "Menu \(Int(index) + 1)"
-        }
+       configureTabView()
         
         // Add separator between menu items when using as segmented control
         if pageMenu.configuration.useMenuLikeSegmentedControl {

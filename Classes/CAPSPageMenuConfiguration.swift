@@ -11,6 +11,9 @@ import UIKit
 public class CAPSPageMenuConfiguration {
     open var menuHeight : CGFloat = 34.0
     open var menuMargin : CGFloat = 15.0
+    open var menuPadding: UIEdgeInsets?
+    open var menuLeftView: UIView?
+    open var menuRigthView: UIView?
     open var menuItemWidth : CGFloat = 111.0
     open var selectionIndicatorHeight : CGFloat = 3.0
     open var scrollAnimationDurationOnMenuItemTap : Int = 500 // Millisecons

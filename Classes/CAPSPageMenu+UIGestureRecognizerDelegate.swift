@@ -18,7 +18,7 @@ extension CAPSPageMenu : UIGestureRecognizerDelegate {
             var itemIndex : Int = 0
             
             if configuration.useMenuLikeSegmentedControl {
-                itemIndex = Int(tappedPoint.x / (self.view.frame.width / CGFloat(controllerArray.count)))
+                itemIndex = Int(tappedPoint.x / (view.frame.width / CGFloat(controllerArray.count)))
             } else if configuration.menuItemWidthBasedOnTitleTextWidth {
                 // Base case being first item
                 var menuItemLeftBound : CGFloat = 0.0
@@ -79,6 +79,12 @@ extension CAPSPageMenu : UIGestureRecognizerDelegate {
                 UIView.animate(withDuration: duration, animations: { () -> Void in
                     let xOffset : CGFloat = CGFloat(itemIndex) * self.controllerScrollView.frame.width
                     self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
+                    
+                    if let paddingRight = self.configuration.menuPadding?.right, let paddingLeft = self.configuration.menuPadding?.left {
+                        
+                        let moveToX = CGFloat((( itemIndex * 100 ) / self.controllerArray.count )) / 100
+                        self.menuScrollView.setContentOffset(CGPoint(x: self.menuScrollView.contentOffset.x + ((paddingRight + paddingLeft) * moveToX), y: self.menuScrollView.contentOffset.y), animated: false)
+                    }
                 })
                 
                 if tapTimer != nil {

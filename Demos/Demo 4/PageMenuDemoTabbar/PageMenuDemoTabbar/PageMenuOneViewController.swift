@@ -41,29 +41,34 @@ class PageMenuOneViewController: UIViewController {
             //            controller3.view.backgroundColor = getRandomColor()
             controllerArray.append(controller3)
         }
+        let label = UILabel()
+        label.text = "Right"
         
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
+            .menuPadding(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 140)),
+            .menuItemWidth(140),
+            .appendRigthView(label),
+            .menuItemWidthBasedOnTitleTextWidth(false),
             .scrollMenuBackgroundColor(UIColor.orange),
             .viewBackgroundColor(UIColor.white),
-            .selectionIndicatorColor(UIColor.white),
+            .selectionIndicatorColor(UIColor.red),
             .unselectedMenuItemLabelColor(UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.4)),
             .menuItemFont(UIFont(name: "HelveticaNeue", size: 35.0)!),
             .menuHeight(44.0),
             .menuMargin(20.0),
-            .selectionIndicatorHeight(0.0),
+            .selectionIndicatorHeight(3.0),
             .bottomMenuHairlineColor(UIColor.orange),
-            .menuItemWidthBasedOnTitleTextWidth(true),
             .selectedMenuItemLabelColor(UIColor.white)
         ]
         
         // Initialize scroll menu
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRect(x: 0.0, y: 60.0, width: self.view.frame.width, height: self.view.frame.height - 60.0), pageMenuOptions: parameters)
+        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRect(x: 0.0, y: 60.0, width: view.frame.width, height: view.frame.height - 60.0), pageMenuOptions: parameters)
         
-        self.view.addSubview(pageMenu!.view)
+        view.addSubview(pageMenu!.view)
     }
     
-    func getRandomColor() -> UIColor{
+    func getRandomColor() -> UIColor {
         
         let randomRed:CGFloat = CGFloat(drand48())
         
