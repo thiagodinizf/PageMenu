@@ -46,7 +46,11 @@ extension CAPSPageMenu : UIGestureRecognizerDelegate {
                 }
             }
             
-            if itemIndex >= 0 && itemIndex < controllerArray.count {
+            if itemIndex >= 0 && itemIndex < controllerArray.count,
+                selectedMenuItemIndex != itemIndex {
+                
+                selectedMenuItemIndex = itemIndex
+                
                 // Update page if changed
                 if itemIndex != currentPageIndex {
                     startingPageForScroll = itemIndex
@@ -80,9 +84,11 @@ extension CAPSPageMenu : UIGestureRecognizerDelegate {
                     let xOffset : CGFloat = CGFloat(itemIndex) * self.controllerScrollView.frame.width
                     self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
                     
-                    if let paddingRight = self.configuration.menuPadding?.right, let paddingLeft = self.configuration.menuPadding?.left {
+                    if let paddingRight = self.configuration.menuPadding?.right,
+                        let paddingLeft = self.configuration.menuPadding?.left {
                         
                         let moveToX = CGFloat((( itemIndex * 100 ) / self.controllerArray.count )) / 100
+                        
                         self.menuScrollView.setContentOffset(CGPoint(x: self.menuScrollView.contentOffset.x + ((paddingRight + paddingLeft) * moveToX), y: self.menuScrollView.contentOffset.y), animated: false)
                     }
                 })
