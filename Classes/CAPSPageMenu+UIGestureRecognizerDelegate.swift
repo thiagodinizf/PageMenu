@@ -85,7 +85,8 @@ extension CAPSPageMenu : UIGestureRecognizerDelegate {
                     self.controllerScrollView.setContentOffset(CGPoint(x: xOffset, y: self.controllerScrollView.contentOffset.y), animated: false)
                     
                     if let paddingRight = self.configuration.menuPadding?.right,
-                        let paddingLeft = self.configuration.menuPadding?.left {
+                        let paddingLeft = self.configuration.menuPadding?.left,
+                        self.menuScrollView.contentSize.width > self.menuScrollView.frame.size.width {
                         
                         let moveToX = CGFloat((( itemIndex * 100 ) / self.controllerArray.count )) / 100
                         
