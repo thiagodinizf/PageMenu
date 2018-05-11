@@ -38,7 +38,7 @@ open class CAPSPageMenu: UIViewController {
     var controllerArray : [UIViewController] = []
     var menuItems : [MenuItemView] = []
     var menuItemWidths : [CGFloat] = []
-    var selectedMenuItemIndex: Int = 0
+    open var selectedMenuItemIndex: Int = 0
     
     var totalMenuItemWidthIfDifferentWidths : CGFloat = 0.0
     
